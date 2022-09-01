@@ -91,10 +91,10 @@ class _MyHomePageState extends State<MyHomePage>
         bottomNavigationBar: TabBar(
           tabs: <Tab>[
             Tab(
-              icon: Icon(Icons.looks_one, color: Colors.blue),
+              icon: Icon(Icons.list_rounded, color: Colors.blue),
             ),
             Tab(
-              icon: Icon(Icons.looks_two, color: Colors.blue),
+              icon: Icon(Icons.edit, color: Colors.blue),
             )
           ],
           controller: controller,
