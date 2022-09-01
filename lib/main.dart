@@ -3,90 +3,82 @@
 import 'package:app/imageWidget.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialFlutterApp());
+void main() => runApp(MyApp());
 
-class MaterialFlutterApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    print('createState');
-    return _MaterialFlutterApp();
-  }
-}
-
-class _MaterialFlutterApp extends State<MaterialFlutterApp> {
-  var switchValue = false;
-  String test = "hello";
-  Color _color = Colors.blue;
-
+class MyApp extends StatelessWidget {
+  static const String _title = 'Widget Example';
   @override
   Widget build(BuildContext context) {
-    print('build');
-
-    if (mounted == true) {
-      print('mounted==true');
-    }
-
-    if (mounted == false) {
-      print('mounted==false');
-    }
-
-    return MaterialApp(
-        title: 'Flutter Prac',
-        theme: ThemeData(
-          primarySwatch: Colors.amber,
-        ),
-        darkTheme: ThemeData.light(),
-        home: ImageWidget());
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('initState');
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    print('didChangeDependencies');
-  }
-
-  @override
-  void didUpdateWidget(covariant MaterialFlutterApp oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    print('didUpdateWidget');
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    super.deactivate();
-    print('deactivate');
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement deactivate
-    super.deactivate();
-    print('dispose');
+    return MaterialApp(title: _title, home: WidgetApp());
   }
 }
 
-/**
- * 첫 렌더링시 콘솔
- * I/flutter (11651): createState
- * I/flutter (11651): initState
- * I/flutter (11651): didChangeDependencies
- * I/flutter (11651): build
- * I/flutter (11651): mounted==true
- */
+class WidgetApp extends StatefulWidget {
+  @override
+  _WidgetApp createState() => _WidgetApp();
+}
 
-/**
- * 업데이트시 콘솔
- * I/flutter (11651): setState
- * I/flutter (11651): build
- * I/flutter (11651): mounted==true
- */
+class _WidgetApp extends State<WidgetApp> {
+  String sum = "";
+  TextEditingController value1 = TextEditingController();
+  TextEditingController value2 = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+          child: Center(
+              child: Column(
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.all(15),
+              child: Text('Flutter',
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 30,
+                      fontFamily: 'Pacifico'))),
+          Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                controller: value1,
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                controller: value2,
+              )),
+          Padding(
+              padding: EdgeInsets.all(15),
+              child: ElevatedButton(
+                  onPressed: () => {
+                        setState(() {
+                          int result = int.parse(value1.value.text) +
+                              int.parse(value2.value.text);
+                          sum = '$result';
+                        })
+                      },
+                  child: Row(
+                    children: [
+                      Icon(Icons.add),
+                      Text(
+                        '더하기',
+                      )
+                    ],
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.amber)))),
+          Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                '결과 : $sum',
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              )),
+        ],
+      ))),
+    );
+  }
+}
