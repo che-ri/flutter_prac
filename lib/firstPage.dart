@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../animalItem.dart';
 
-class FirstApp extends StatelessWidget {
-  final List<Animal> list; // Animal List 선언
+class FirstApp extends StatefulWidget {
+  List<Animal> list;
   FirstApp({Key? key, required this.list}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => _FirstApp();
+}
+
+class _FirstApp extends State<FirstApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,21 +25,30 @@ class FirstApp extends StatelessWidget {
                   //GestureDetector : 터치이벤트를 처리하기 위한 위젯
                   child: Card(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Image.asset(
-                          list[position].imagePath!,
+                          widget.list[position].imagePath!,
                           height: 100,
                           width: 100,
                           fit: BoxFit.contain,
                         ),
-                        Text(list[position].animalName!),
+                        Text(widget.list[position].animalName!),
+                        ElevatedButton(
+                          child: Text('삭제'),
+                          onPressed: () {
+                            setState(() {
+                              widget.list.removeAt(position);
+                            });
+                          },
+                        )
                       ],
                     ),
                   ),
                   onTap: () {
                     AlertDialog dialog = AlertDialog(
                       content: Text(
-                        '이 동물은 ${list[position].kind} 입니다',
+                        '이 동물은 ${widget.list[position].kind} 입니다',
                         style: TextStyle(fontSize: 30.0),
                       ),
                     );
@@ -42,12 +56,9 @@ class FirstApp extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) => dialog);
                   },
-                  onLongPress: () {
-                    list.removeAt(position);
-                  },
                 );
               },
-              itemCount: list.length),
+              itemCount: widget.list.length),
         ),
       ),
     );
