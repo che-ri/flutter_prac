@@ -1,5 +1,6 @@
-import 'package:app/firstPage.dart'; //첫번째 페이지
-import 'package:app/secondPage.dart'; //두번째 페이지
+import './animalItem.dart'; //model
+import './firstPage.dart';
+import './secondPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -18,17 +19,30 @@ class WidgetApp extends StatefulWidget {
 }
 
 class _WidgetApp extends State<WidgetApp> with SingleTickerProviderStateMixin {
-  //with 키워드는 여러 클래스를 재사용하게끔 해준다.
-  //SingleTickerProviderStateMixin을 추가로 상속하면서 위젯이 **애니메이션 동작**을 처리할 수 있게 한 것임. 상속하지 않으면 탭컨트롤러를 만들 수 없음.
-
-  TabController? controller; //여러 화면을 이동하는 역할을 하므로 기본적으로 **애니메이션**을 사용한다.
+  TabController? controller;
+  List<Animal> animalList =
+      new List.empty(growable: true); //growable은 리스트가 가변적으로 증가할 수 있다는 것을 의미한다.
   @override
   void initState() {
     super.initState();
-    controller = TabController(
-        length: 2,
-        vsync:
-            this); //length: 탭의 갯수, vsync : 탭이 이동했을 때 호출되는 콜백 함수를 어디서 처리할지 지정.
+    controller = TabController(length: 2, vsync: this);
+
+    animalList
+        .add(Animal(animalName: '벌', kind: '곤충', imagePath: 'image/bee.png'));
+    animalList.add(
+        Animal(animalName: '고양이', kind: '포유류', imagePath: 'image/cat.png'));
+    animalList
+        .add(Animal(animalName: '젖소', kind: '포유류', imagePath: 'image/cow.png'));
+    animalList.add(
+        Animal(animalName: '강아지', kind: '포유류', imagePath: 'image/dog.png'));
+    animalList
+        .add(Animal(animalName: '여우', kind: '포유류', imagePath: 'image/fox.png'));
+    animalList.add(
+        Animal(animalName: '원숭이', kind: '영장류', imagePath: 'image/monkey.png'));
+    animalList
+        .add(Animal(animalName: '돼지', kind: '포유류', imagePath: 'image/pig.png'));
+    animalList.add(
+        Animal(animalName: '늑대', kind: '포유류', imagePath: 'image/wolf.png'));
   }
 
   @override
@@ -54,7 +68,12 @@ class _WidgetApp extends State<WidgetApp> with SingleTickerProviderStateMixin {
           title: Text('Flutter Prac'),
         ),
         body: TabBarView(
-          children: <Widget>[FirstApp(), SecondApp()],
+          children: <Widget>[
+            FirstApp(
+              list: animalList,
+            ),
+            SecondApp()
+          ],
           controller: controller,
         ),
         bottomNavigationBar: TabBar(
