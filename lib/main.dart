@@ -1,5 +1,6 @@
 // import 'dart:html';
 
+import 'package:app/imageWidget.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialFlutterApp());
@@ -35,21 +36,7 @@ class _MaterialFlutterApp extends State<MaterialFlutterApp> {
           primarySwatch: Colors.amber,
         ),
         darkTheme: ThemeData.light(),
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('Flutter Prac'),
-            ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                print('press!');
-              },
-            ),
-            body: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[Icon(Icons.android), Text('Android')]),
-            )));
+        home: ImageWidget());
   }
 
   @override
