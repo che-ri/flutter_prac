@@ -22,6 +22,19 @@ class _WidgetApp extends State<WidgetApp> {
   String sum = "";
   TextEditingController value1 = TextEditingController();
   TextEditingController value2 = TextEditingController();
+  String? _buttonText;
+  List _buttonList = ['더하기', '빼기', '곱하기', '나누기'];
+  List<DropdownMenuItem<String>> _dropDownMenuItems =
+      new List.empty(growable: true);
+  @override
+  void initState() {
+    super.initState();
+    for (var item in _buttonList) {
+      _dropDownMenuItems.add(DropdownMenuItem(value: item, child: Text(item)));
+    }
+    _buttonText = _dropDownMenuItems[0].value;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -52,21 +65,44 @@ class _WidgetApp extends State<WidgetApp> {
               )),
           Padding(
               padding: EdgeInsets.all(15),
+              child: DropdownButton(
+                  items: _dropDownMenuItems,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _buttonText = value;
+                    });
+                  },
+                  value: _buttonText)),
+          Padding(
+              padding: EdgeInsets.all(15),
               child: ElevatedButton(
                   onPressed: () => {
                         setState(() {
-                          int result = int.parse(value1.value.text) +
-                              int.parse(value2.value.text);
+                          var value1Int = num.parse(value1.value.text);
+                          var value2Int = num.parse(value2.value.text);
+                          var result;
+                          switch (_buttonText) {
+                            case "더하기":
+                              result = value1Int + value2Int;
+                              break;
+                            case "빼기":
+                              result = value1Int - value2Int;
+                              break;
+                            case "곱하기":
+                              result = value1Int * value2Int;
+                              break;
+                            case "나누기":
+                              result = value1Int / value2Int;
+                              break;
+                            default:
+                              result = 0;
+                              break;
+                          }
                           sum = '$result';
                         })
                       },
                   child: Row(
-                    children: [
-                      Icon(Icons.add),
-                      Text(
-                        '더하기',
-                      )
-                    ],
+                    children: [Icon(Icons.add), Text(_buttonText!)],
                   ),
                   style: ButtonStyle(
                       backgroundColor:
