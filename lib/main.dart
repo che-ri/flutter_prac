@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialFlutterApp());
 
-class MyApp extends StatefulWidget {
+class MaterialFlutterApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     print('createState');
-    return _MyApp();
+    return _MaterialFlutterApp();
   }
 }
 
-class _MyApp extends State<MyApp> {
+class _MaterialFlutterApp extends State<MaterialFlutterApp> {
   var switchValue = false;
   String test = "hello";
   Color _color = Colors.blue;
@@ -30,34 +30,26 @@ class _MyApp extends State<MyApp> {
     }
 
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Prac',
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
         darkTheme: ThemeData.light(),
         home: Scaffold(
-          body: Center(
-              child: ElevatedButton(
-            child: Text('$test'),
-            style:
-                ButtonStyle(backgroundColor: MaterialStateProperty.all(_color)),
-            onPressed: () {
-              if (_color == Colors.blue) {
-                setState(() {
-                  print('setState');
-                  test = 'flutter';
-                  _color = Colors.amber;
-                });
-              } else {
-                setState(() {
-                  print('setState');
-                  test = 'hello';
-                  _color = Colors.blue;
-                });
-              }
-            },
-          )),
-        ));
+            appBar: AppBar(
+              title: Text('Flutter Prac'),
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                print('press!');
+              },
+            ),
+            body: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[Icon(Icons.android), Text('Android')]),
+            )));
   }
 
   @override
@@ -75,7 +67,7 @@ class _MyApp extends State<MyApp> {
   }
 
   @override
-  void didUpdateWidget(covariant MyApp oldWidget) {
+  void didUpdateWidget(covariant MaterialFlutterApp oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     print('didUpdateWidget');
