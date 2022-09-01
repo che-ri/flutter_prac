@@ -56,51 +56,118 @@ class _SecondApp extends State<SecondApp> {
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
                     GestureDetector(
-                      child: Image.asset('image/bee.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/bee.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/bee.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/bee.png';
+                        setState(() {
+                          _imagePath = 'image/bee.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/cat.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/cat.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/cat.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/cat.png';
+                        setState(() {
+                          _imagePath = 'image/cat.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/cow.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/cow.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/cow.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/cow.png';
+                        setState(() {
+                          _imagePath = 'image/cow.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/dog.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/dog.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/dog.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/dog.png';
+                        setState(() {
+                          _imagePath = 'image/dog.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/fox.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/fox.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/fox.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/fox.png';
+                        setState(() {
+                          _imagePath = 'image/fox.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/monkey.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/monkey.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset(
+                            'image/monkey.png',
+                            width: 80,
+                            fit: BoxFit.cover,
+                          )),
                       onTap: () {
-                        _imagePath = 'image/monkey.png';
+                        setState(() {
+                          _imagePath = 'image/monkey.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/pig.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/pig.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/pig.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/pig.png';
+                        setState(() {
+                          _imagePath = 'image/pig.png';
+                        });
                       },
                     ),
                     GestureDetector(
-                      child: Image.asset('image/wolf.png', width: 80),
+                      child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: _imagePath == 'image/wolf.png'
+                              ? Colors.blue
+                              : null,
+                          child: Image.asset('image/wolf.png',
+                              width: 80, fit: BoxFit.cover)),
                       onTap: () {
-                        _imagePath = 'image/wolf.png';
+                        setState(() {
+                          _imagePath = 'image/wolf.png';
+                        });
                       },
                     ),
                   ],
