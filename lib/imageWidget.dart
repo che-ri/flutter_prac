@@ -30,6 +30,11 @@ class _ImageWidgetState extends State<ImageWidget> {
                 // BoxFit.fitHeight //height를 꽉 채워서 그린다. 이미지가 잘릴 수 있다.
                 // BoxFit.none //원본 이미지를 표시한다. 이미지가 잘릴 수 있다.
                 // BoxFit.scaleDown //전체 이미지가 나올 수 있게 이미지 크기를 조절해서 표시한다.
+              ),
+              Text(
+                'Hello Flutter',
+                style: TextStyle(
+                    fontFamily: 'Pacifico', fontSize: 30, color: Colors.blue),
               )
             ],
           ),
