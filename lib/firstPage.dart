@@ -14,13 +14,30 @@ class FirstApp extends StatelessWidget {
           itemBuilder: (context, position) {
             //ListView.builder는 BuildContext와 int를 반환.
             //BuildCotext : 위젯 트리에서 위젯의 위치를 알려줌
-            //int : 아이템의 순번을 의미
-            return Card(
-              child: Row(children: [
-                Image.asset(list![position].imagePath!,
-                    height: 100, width: 100, fit: BoxFit.contain),
-                Text(list![position].animalName!)
-              ]),
+            //int : 아이템의 순번을 의미. 여기에서는 position이라는 이름으로 정의했다.
+            return GestureDetector(
+              //GestureDetector : 터치이벤트를 처리하기 위한 위젯
+              child: Card(
+                child: Row(children: [
+                  Image.asset(list![position].imagePath!,
+                      height: 100, width: 100, fit: BoxFit.contain),
+                  Text(list![position].animalName!)
+                ]),
+              ),
+              onTap: () {
+                //AlertDialog는 알림창 위젯
+                AlertDialog dialog = AlertDialog(
+                  content: Text(
+                    '이 동물은 ${list![position].kind}입니다',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                );
+
+                //showDialog : 알림창을 띄우는 함수
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => dialog);
+              },
             );
           },
           itemCount: list!.length,
