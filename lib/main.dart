@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'cupertinoMain.dart';
 
 import 'animalItem.dart';
 import 'firstPage.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CupertinoMain(),
     );
   }
 }
