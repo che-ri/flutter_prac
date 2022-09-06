@@ -10,17 +10,25 @@ class SecondDetail extends StatefulWidget {
 class _SecondDetailState extends State<SecondDetail> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = new TextEditingController();
+
     return Scaffold(
-      appBar: AppBar(title: Text('두번째 페이지')),
-      body: Container(
-          child: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              //pushReplacementNamed() 함수는 스택 메모리에 있는 자료를 교체한다.
-              Navigator.of(context).pushReplacementNamed('/third');
-            },
-            child: Text('세 번째 페이지로 이동하기')),
-      )),
-    );
+        appBar: AppBar(title: Text('두번째 페이지')),
+        body: Container(
+            child: Center(
+                child: Container(
+          child: Column(children: <Widget>[
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.text,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  //💁🏼‍♀️ 페이지이동하면서 데이터 주고받기 2
+                  Navigator.of(context).pop(controller.value.text);
+                },
+                child: Text('저장하기'))
+          ]),
+        ))));
   }
 }
