@@ -1,3 +1,4 @@
+import 'package:app/largeFileMain.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HttpApp(),
+      home: LargeFileMain(),
     );
   }
 }
