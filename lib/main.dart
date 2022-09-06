@@ -27,7 +27,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: FirstPage(),
+      //route설정
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FirstPage(),
+        '/second': (context) => SecondPage()
+      },
     );
   }
 }
@@ -53,11 +58,7 @@ class _FirstPageState extends State<FirstPage> {
           //Navigator은 스택(stack)을 이용해 페이지를 관리할 때 사용하는 클래스이다.
           //Navigator의 of(context)함수는 현재 페이지를 나타내고,
           //push()함수는 스택에 페이지를 쌓는 역할을 한다.
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) {
-              return SecondPage();
-            },
-          ));
+          Navigator.of(context).pushNamed('/second');
         },
         child: Icon(Icons.add),
       ),
