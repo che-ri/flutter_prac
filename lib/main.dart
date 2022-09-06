@@ -1,11 +1,10 @@
-import 'package:app/largeFileMain.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+//widgets
 import 'package:app/secondDetail.dart';
 import 'package:app/subDetail.dart';
-import 'package:app/thirdPage.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:app/thirdDetail.dart';
 
 void main() async {
   await dotenv.load(fileName: 'config/.env');
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SubDetail(),
         '/second': (context) => SecondDetail(),
-        '/third': (context) => ThirdPage()
+        '/third': (context) => ThirdDetail()
       },
     );
   }

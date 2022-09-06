@@ -8,17 +8,40 @@ class SubDetail extends StatefulWidget {
 }
 
 class _SubDetailState extends State<SubDetail> {
+  List<String> todoList = new List.empty(growable: true);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    todoList.add('당근 사오기');
+    todoList.add('약 사오기');
+    todoList.add('청소하기');
+    todoList.add('부모님께 전화하기');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Sub Detail Example')),
-        body: Container(
-          child: Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/second');
-                  },
-                  child: Text('두 번째 페이지로 이동'))),
+        body: ListView.builder(
+          itemCount: todoList.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: InkWell(
+                splashColor: Colors.lightGreenAccent,
+                child: Text(
+                  todoList[index],
+                  style: TextStyle(fontSize: 30),
+                ),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('/third', arguments: todoList[index]);
+                  //third path로 todo의 데이터 전달
+                },
+              ),
+            );
+          },
         ));
   }
 }
