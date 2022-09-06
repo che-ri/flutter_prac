@@ -27,95 +27,65 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LargeFileMain(),
+      home: FirstPage(),
     );
   }
 }
 
-class HttpApp extends StatefulWidget {
-  const HttpApp({super.key});
+class FirstPage extends StatefulWidget {
+  const FirstPage({super.key});
 
   @override
-  State<HttpApp> createState() => _HttpAppState();
+  State<FirstPage> createState() => _FirstPageState();
 }
 
-class _HttpAppState extends State<HttpApp> {
-  String result = '';
-  List? data;
-
-  Future<String> getData() async {
-    var url = 'http://dapi.kakao.com/v3/search/book?target=title&query=doit';
-    var response = await http.get(Uri.parse(url),
-        headers: {"Authorization": dotenv.env['KAKAO_API_KEY']!});
-
-    setState(() {
-      var dataConvertedToJson = json.decode(response.body);
-      data!.addAll(dataConvertedToJson['documents']);
-    });
-    return response.body;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    data = new List.empty(growable: true);
-  }
-
+class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('http example')),
+      appBar: AppBar(title: Text('Main Page')),
       body: Container(
-        child: Center(
-            child: data!.length == 0
-                ? Text(
-                    '데이터가 없습니다.',
-                    style: TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center,
-                  )
-                : ListView.builder(
-                    itemCount: data!.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Container(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Image.network(
-                                  data![index]['thumbnail'],
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.contain,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      //MediaQuery.of(context).size : 스마트폰의 화면 크기
-                                      width: MediaQuery.of(context).size.width -
-                                          150,
-                                      child: Text(
-                                        data![index]['title'].toString(),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Text(data![index]['authors'].toString()),
-                                    Text(data![index]['sale_price'].toString()),
-                                    Text(data![index]['status'].toString()),
-                                  ],
-                                )
-                              ]),
-                        ),
-                      );
-                    },
-                  )),
-      ),
+          child: Center(
+        child: Text('메인 페이지'),
+      )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {getData()},
-        child: Icon(Icons.file_download),
+        onPressed: () {
+          //Navigator은 스택(stack)을 이용해 페이지를 관리할 때 사용하는 클래스이다.
+          //Navigator의 of(context)함수는 현재 페이지를 나타내고,
+          //push()함수는 스택에 페이지를 쌓는 역할을 한다.
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return SecondPage();
+            },
+          ));
+        },
+        child: Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({super.key});
+
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('두번째 페이지')),
+      body: Container(
+          child: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              //pop()함수는 스택 메모리에서 맨 위에 있는 페이지를 제거한다.
+              Navigator.of(context).pop(); //지금 페이지를 종료
+            },
+            child: Text('돌아가기')),
+      )),
     );
   }
 }
