@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
@@ -11,11 +12,18 @@ class LargeFileMain extends StatefulWidget {
 }
 
 class _LargeFileMainState extends State<LargeFileMain> {
-  final imageUrl =
-      'https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg';
+  TextEditingController? _editingController;
   bool downloading = false;
   var progressString = '';
   String file = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _editingController = new TextEditingController(
+        text:
+            'https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg');
+  }
 
   Future<void> downloadFile() async {
     Dio dio = Dio();
@@ -25,7 +33,7 @@ class _LargeFileMainState extends State<LargeFileMain> {
       print('dir::: $dir');
       await dio.download(
         //url에 담긴 주소에서 파일 다운로드하고, 내부 디렉터리 안에 myimage.jpg라는 이름으로 저장한다.
-        imageUrl,
+        _editingController!.value.text,
         '${dir.path}/myimage.jpg',
         onReceiveProgress: (count, total) {
           //데이터를 받을 때마다, 진행 상황을 표시한다.
@@ -69,7 +77,12 @@ class _LargeFileMainState extends State<LargeFileMain> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Large File Example'),
+        title: TextField(
+          controller: _editingController,
+          style: TextStyle(color: Colors.white),
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(hintText: 'url을 입력해주세요!'),
+        ),
       ),
       body: Center(
           child: downloading
