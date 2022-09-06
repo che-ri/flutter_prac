@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'cupertinoMain.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'animalItem.dart';
-import 'firstPage.dart';
-import 'secondPage.dart';
+void main() async {
+  await dotenv.load(fileName: 'config/.env');
 
-void main() {
   runApp(MyApp());
 }
 
@@ -26,85 +26,95 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: CupertinoMain(),
+      home: HttpApp(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HttpApp extends StatefulWidget {
+  const HttpApp({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<HttpApp> createState() => _HttpAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  TabController? controller;
-  List<Animal> animalList = List.empty(growable: true);
+class _HttpAppState extends State<HttpApp> {
+  String result = '';
+  List? data;
+
+  Future<String> getData() async {
+    var url = 'http://dapi.kakao.com/v3/search/book?target=title&query=doit';
+    var response = await http.get(Uri.parse(url),
+        headers: {"Authorization": dotenv.env['KAKAO_API_KEY']!});
+
+    setState(() {
+      var dataConvertedToJson = json.decode(response.body);
+      data!.addAll(dataConvertedToJson['documents']);
+    });
+    return response.body;
+  }
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    controller = TabController(length: 2, vsync: this);
-    animalList
-        .add(Animal(animalName: '벌', kind: '곤충', imagePath: 'image/bee.png'));
-    animalList.add(
-        Animal(animalName: '고양이', kind: '포유류', imagePath: 'image/cat.png'));
-    animalList
-        .add(Animal(animalName: '젖소', kind: '포유류', imagePath: 'image/cow.png'));
-    animalList.add(
-        Animal(animalName: '강아지', kind: '포유류', imagePath: 'image/dog.png'));
-    animalList
-        .add(Animal(animalName: '여우', kind: '포유류', imagePath: 'image/fox.png'));
-    animalList.add(
-        Animal(animalName: '원숭이', kind: '영장류', imagePath: 'image/monkey.png'));
-    animalList
-        .add(Animal(animalName: '돼지', kind: '포유류', imagePath: 'image/pig.png'));
-    animalList.add(
-        Animal(animalName: '늑대', kind: '포유류', imagePath: 'image/wolf.png'));
+    data = new List.empty(growable: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Listview Example'),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            FirstApp(list: animalList),
-            SecondApp(list: animalList)
-          ],
-          controller: controller,
-        ),
-        bottomNavigationBar: TabBar(
-          tabs: <Tab>[
-            Tab(
-              icon: Icon(Icons.list_rounded, color: Colors.blue),
-            ),
-            Tab(
-              icon: Icon(Icons.edit, color: Colors.blue),
-            )
-          ],
-          controller: controller,
-        ));
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+      appBar: AppBar(title: Text('http example')),
+      body: Container(
+        child: Center(
+            child: data!.length == 0
+                ? Text(
+                    '데이터가 없습니다.',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  )
+                : ListView.builder(
+                    itemCount: data!.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Container(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Image.network(
+                                  data![index]['thumbnail'],
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.contain,
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      //MediaQuery.of(context).size : 스마트폰의 화면 크기
+                                      width: MediaQuery.of(context).size.width -
+                                          150,
+                                      child: Text(
+                                        data![index]['title'].toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Text(data![index]['authors'].toString()),
+                                    Text(data![index]['sale_price'].toString()),
+                                    Text(data![index]['status'].toString()),
+                                  ],
+                                )
+                              ]),
+                        ),
+                      );
+                    },
+                  )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {getData()},
+        child: Icon(Icons.file_download),
+      ),
+    );
   }
 }
