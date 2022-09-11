@@ -1,12 +1,9 @@
-import 'package:app/videoPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //widgets
-import 'package:app/secondDetail.dart';
-import 'package:app/subDetail.dart';
-import 'package:app/thirdDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app/fileApp.dart';
 
 void main() async {
   await dotenv.load(fileName: 'config/.env');
@@ -31,7 +28,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: VideoPage());
+        home: FileApp());
   }
 }
 
