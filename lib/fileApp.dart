@@ -53,6 +53,13 @@ class _FileAppState extends State<FileApp> {
     }
   }
 
+  void writeFruit(String fruit) async {
+    var dir = await getApplicationDocumentsDirectory();
+    String file = await File(dir.path + '/fruit.txt').readAsString();
+    file = file + '\n' + fruit;
+    File(dir.path + '/fruit.txt').writeAsStringSync(file);
+  }
+
   void initData() async {
     List<String> result = await readListFile();
 
@@ -78,6 +85,14 @@ class _FileAppState extends State<FileApp> {
         TextField(
           controller: controller,
           keyboardType: TextInputType.text,
+          onSubmitted: (value) {
+            print('value::: $value');
+            writeFruit(value);
+            setState(() {
+              itemList.add(value);
+            });
+            controller.clear();
+          },
         ),
         //ListView의 'Vertical viewport was given unbounded height' 이슈가 나오면 Expended 위젯을 이용하자.
         //Expended 위젯은 남은 공간을 모두 사용한다.
