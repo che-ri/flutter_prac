@@ -1,4 +1,5 @@
 import 'package:app/introPage.dart';
+import 'package:app/videoPage.dart';
 import 'package:flutter/material.dart';
 import 'largeFileMain.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: IntroPage(),
+      home: VideoPage(),
     );
   }
 }

@@ -12,6 +12,7 @@ class VideoPage extends StatefulWidget {
 class _VideoPageState extends State<VideoPage> {
   VideoPlayerController? videoPlayerController;
   ChewieController? chewieController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -22,33 +23,39 @@ class _VideoPageState extends State<VideoPage> {
   Future<void> initializeVideoPlayer() async {
     videoPlayerController = VideoPlayerController.network(
         'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4');
-    await Future.wait([videoPlayerController!.initialize()]).then((value) => {
-          chewieController = ChewieController(
-            videoPlayerController: videoPlayerController!,
-            autoPlay: true, //자동재생
-            looping: true, //반복재생
-          )
-        });
+
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController!,
+      autoPlay: true, //자동재생
+      looping: true, //반복재생
+      aspectRatio: 16 / 9, //영상비율
+      autoInitialize: true,
+      errorBuilder: (context, errorMessage) {
+        print(errorMessage);
+        return Center(
+          child: Text(
+            '영상을 표시할 수 없습니다.',
+            style: TextStyle(color: Colors.white),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: chewieController != null &&
-                chewieController!.videoPlayerController.value.isInitialized
-            ? Chewie(
-                controller: chewieController!,
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 20),
-                  Text('Loading'),
-                ],
-              ),
-      ),
+          child: Chewie(
+        controller: chewieController!,
+      )),
     );
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController!.dispose();
+    chewieController!.dispose();
+    super.dispose();
   }
 }
