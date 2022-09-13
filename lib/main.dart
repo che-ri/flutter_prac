@@ -1,6 +1,7 @@
 import 'package:app/introPage.dart';
 import 'package:app/videoPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'largeFileMain.dart';
 
 void main() {
@@ -27,6 +28,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('kr', 'KR'),
+      ],
       home: VideoPage(),
     );
   }
