@@ -54,4 +54,10 @@ class Constants {
       "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd";
   static String segmentedSubtitlesHlsUrl =
       "https://eng-demo.cablecast.tv/segmented-captions/vod.m3u8";
+
+  List<String> videoUrls = [
+    bugBuckBunnyVideoUrl,
+    elephantDreamVideoUrl,
+    forBiggerJoyridesVideoUrl
+  ];
 }

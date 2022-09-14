@@ -1,7 +1,10 @@
+import 'package:app/constants.dart';
 import 'package:app/introPage.dart';
 import 'package:app/videoPage.dart';
+import 'package:app/customVideoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:video_player/video_player.dart';
 import 'largeFileMain.dart';
 
 void main() {
@@ -36,7 +39,10 @@ class MyApp extends StatelessWidget {
         const Locale('en', 'US'),
         const Locale('kr', 'KR'),
       ],
-      home: VideoPage(),
+      home: CustomVideoPlayer(
+        videoUrls: Constants().videoUrls,
+        videoIndex: 0,
+      ),
     );
   }
 }

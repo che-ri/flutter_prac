@@ -19,7 +19,9 @@ class _VideoPageState extends State<VideoPage> {
     print('start');
     BetterPlayerConfiguration betterPlayerConfiguration =
         BetterPlayerConfiguration(
-            aspectRatio: 16 / 9, fit: BoxFit.contain, handleLifecycle: true);
+      aspectRatio: 16 / 9,
+      fit: BoxFit.contain,
+    );
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network, Constants.elephantDreamVideoUrl);
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
