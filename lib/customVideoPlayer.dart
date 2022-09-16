@@ -1,13 +1,13 @@
-import 'package:app/customVideoControlButtons.dart';
 import 'package:app/customVideoControls.dart';
+import 'package:app/customVideoOverlay.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
   final List<String>? videoUrls;
-  final int? videoIndex;
+  int? videoIndex;
 
-  const CustomVideoPlayer({
+  CustomVideoPlayer({
     @required this.videoUrls,
     @required this.videoIndex,
     Key? key,
@@ -24,18 +24,10 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   @override
   void initState() {
     // TODO: implement initState
-    url = widget.videoUrls![widget.videoIndex!];
 
-    if (url == null) {
-      print('잘못된 형식입니다.');
-    }
+    controller = VideoPlayerController.network(widget.videoUrls![0])
+      ..initialize().then((value) => {setState(() {})});
 
-    controller = VideoPlayerController.network(this.url!);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-    controller.initialize();
     super.initState();
   }
 
@@ -58,32 +50,28 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
               alignment: Alignment.bottomCenter,
               children: <Widget>[
                 VideoPlayer(controller),
-                CustomVideoControls(controller: controller),
+                CustomVideoOverlay(controller: controller),
               ],
             ),
           ),
-          CustomVideoControlButtons(
+          CustomVideoControls(
               controller: controller,
               videoUrls: widget.videoUrls,
               videoIndex: widget.videoIndex,
-              initVideo: this.initVideo)
+              initVideo: initVideo)
         ]),
       ),
     );
   }
 
   Future initVideo(int index) async {
-    final new_controller =
-        VideoPlayerController.network(widget.videoUrls![index]);
+    String url = widget.videoUrls![widget.videoIndex!];
 
     if (controller.value.isPlaying) {
       controller.pause();
     }
 
-    controller = new_controller;
-
-    controller.initialize().then((_) {
-      setState(() {});
-    });
+    controller = VideoPlayerController.network(widget.videoUrls![index])
+      ..initialize().then((value) => {setState(() {})});
   }
 }
